@@ -39,36 +39,11 @@ export default function SignupPage() {
     if (validForm) {
       setShowLoader(true);
       try {
-        const response = await fetch("/api/signUp", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            username: formdata.username,
-            email: formdata.email,
-            password: md5(formdata.password)
-          })
-        });
-        if (response.ok) {
-          const data = await response.json();
-        } else {
-          console.error("Failed to fetch data from /api/signUp:", response);
-        }
-      } catch (error) {
-        console.error("Failed to fetch data from /api/signUp:", error);
-      }
-    }
-    /*
-    if (validForm) {
-      setShowLoader(true);
-      try {
-        await axios.post(`/api/signUp`, {
+        await axios.post("https://orange-dune-0b5149b00.2.azurestaticapps.net/api/signUp", {
           username: formdata.username,
           email: formdata.email,
           password: md5(formdata.password),
         });
-        navigateTo("/login");
         alert("Sign up successfully");
       } catch (error) {
         if (error.response.status !== 500) {
@@ -76,7 +51,7 @@ export default function SignupPage() {
         }
       }
       setShowLoader(false);
-    }*/
+    }
   }
 
   useEffect(() => {
