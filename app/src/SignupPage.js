@@ -39,11 +39,12 @@ export default function SignupPage() {
     if (validForm) {
       setShowLoader(true);
       try {
-        await axios.post("/api/signUp", {
+        await axios.post("api/signUp", {
           username: formdata.username,
           email: formdata.email,
           password: md5(formdata.password),
         });
+        navigateTo("/login");
         alert("Sign up successfully");
       } catch (error) {
         if (error.response.status !== 500) {
@@ -76,10 +77,23 @@ export default function SignupPage() {
 
     /* Email validation */
     function handleEmail(input) {
-      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i; // regex to match email format
-      const isValidEmail = emailRegex.test(input);
-      setValidEmail(isValidEmail);
-      return isValidEmail;
+      const hasWhitespace = input.includes(" ");
+      const validFirstChar = input[0] !== ".";
+      const validLastChar = input[input.length - 1] !== ".";
+      let validEmail = false;
+      /* Email shall not contain spaces and shall not start and end with a dot */
+      if (!hasWhitespace && validFirstChar && validLastChar) {
+        const atIndex = input.indexOf("@");
+        if (atIndex !== -1) {
+          const domainName = input.slice(atIndex + 1);
+          /* Domain name shall end with a dot */
+          if (domainName.includes(".")) {
+            validEmail = true;
+          }
+        }
+      }
+      setValidEmail(validEmail);
+      return validEmail;
     }
     handlePasswordInput();
     checkForm();
