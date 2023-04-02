@@ -39,7 +39,7 @@ export default function SignupPage() {
     if (validForm) {
       setShowLoader(true);
       try {
-        await axios.post("https://orange-dune-0b5149b00.2.azurestaticapps.net/api/signUp", {
+        await axios.post("/api/signUp", {
           username: formdata.username,
           email: formdata.email,
           password: md5(formdata.password),
