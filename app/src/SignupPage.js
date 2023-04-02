@@ -38,6 +38,11 @@ export default function SignupPage() {
   async function submitUserInfo() {
     if (validForm) {
       setShowLoader(true);
+      signUpUser();
+    }
+    /*
+    if (validForm) {
+      
       try {
         await axios.post(`/api/signUp`, {
           username: formdata.username,
@@ -52,10 +57,34 @@ export default function SignupPage() {
         }
       }
       setShowLoader(false);
-    }
+    }*/
   }
 
   useEffect(() => {
+    /* Submit the user info */
+    async function signUpUser() {
+      try {
+        const response = await fetch("/api/signUp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            username: formdata.username,
+            email: formdata.email,
+            password: md5(formdata.password)
+          })
+        });
+        if (response.ok) {
+          const data = await response.json();
+        } else {
+          console.error("Failed to fetch data from /api/signUp:", response);
+        }
+      } catch (error) {
+        console.error("Failed to fetch data from /api/signUp:", error);
+      }
+    }
+
     /* Password needs at least 8 characters and needs to match the confirmed password */
     function handlePasswordInput() {
       if (formdata.password.length < 8) {
