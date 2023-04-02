@@ -26,10 +26,10 @@ module.exports = async function (req, res) {
                 let today = new Date();
                 let timestampString = today.toISOString();
                 const user = { 
-                    username: req.body.username, 
-                    email: req.body.email, 
-                    password: req.body.password,
-                    created: timestampString,
+                    username: "testUser",
+                    email: "testUser@domain.com", 
+                    password: "kfni8934hf=djwfj",
+                    created: "kfni8934hf=djwfj",
                 };
                 const query = { username: user.username};
                 const update = { $set: user };
