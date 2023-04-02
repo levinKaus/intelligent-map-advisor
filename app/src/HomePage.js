@@ -7,7 +7,7 @@ export default function HomePage() {
 
   useEffect(() => {
     (async function () {
-      const { text } = await (await fetch(`/api/signUp`)).json();
+      const { text } = await (await fetch(`/api/test`)).json();
       setData(text);
     })();
   }, []);
