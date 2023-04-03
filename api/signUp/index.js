@@ -4,7 +4,7 @@ const AZURE_COSMOSDB_CONNECTION_STRING = process.env["AZURE_COSMOSDB_CONNECTION_
 
 module.exports = async function (req,res) {
     const client = new MongoClient(AZURE_COSMOSDB_CONNECTION_STRING);
-    client.connect();
+    await client.connect();
     if (!AZURE_COSMOSDB_CONNECTION_STRING) {throw Error("Azure Cosmos DB Connection string not found.");}
     if (req.body.username !== "" && req.body.email !== "" && req.body.password !== "") {
         // Get reference of database and collection
@@ -46,6 +46,6 @@ module.exports = async function (req,res) {
         }
     }
     else {
-        context.res = { status: 400, body: "Username and/or email and/or password is missing." };
+        res.status(400).send({message: "Username and/or email and/or password is missing."});
     }
 }
