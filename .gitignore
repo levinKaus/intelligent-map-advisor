@@ -1,1 +1,6 @@
+# root directory
 /.vscode
+
+# app directory
+app/node_modules
+app/build
