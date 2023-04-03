@@ -20,18 +20,18 @@ function App() {
 
   return (
     <form onSubmit={handleSubmit}>
-        <di>
+        <div>
           <h4>Username</h4>
           <input type="text" name="username" value={formData.username} onChange={(e) => setFormData({...formData, username: e.target.value})} />
-        </di>
-        <di>
+        </div>
+        <div>
         <h4>Email</h4>
           <input type="email" name="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
-        </di>
-        <di>
+        </div>
+        <div>
         <h4>Password</h4>
           <input type="text" name="password" value={formData.password} onChange={(e) => setFormData({...formData, password: e.target.value})} />
-        </di>
+        </div>
         <button type="submit">Submit</button>
     </form>
   );
