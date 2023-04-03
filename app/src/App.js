@@ -1,9 +1,8 @@
-// import { useState } from 'react'
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./HomePage";
 import SignupPage from "./SignupPage";
-import SignupTest from ".SignupTest";
+import SignupTest from "./SignupTest";
 
 function App() {
   return (
