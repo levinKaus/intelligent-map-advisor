@@ -21,6 +21,13 @@ export default function HomePage() {
       >
         Click to go to login
       </p>
+      <p
+        onClick={() => {
+          navigateTo("/testapis");
+        }}
+      >
+        Click to go to test APIs
+      </p>
     </div>
   );
 }
