@@ -18,11 +18,11 @@ module.exports = async function (context, req) {
       context.res.status(400).send({ message: "There are no saved places yet." });
     } else {
       // Remove place from placesList array
-      const index = foundPlaces.placesList.indexOf({
-        name: req.body.name,
-        longitude: req.body.longitude,
-        langitude: req.body.langitude
-      })
+      const index = foundPlaces.placesList.findIndex(place => 
+        place.name === req.body.name && 
+        place.longitude === req.body.longitude && 
+        place.langitude === req.body.langitude
+      );
       if (index > -1) { foundPlaces.placesList.splice(index, 1); }
       await collection.updateOne(
         { userID: req.body.userID },
