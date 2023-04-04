@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 export default function TestAPIs() {
   const navigateTo = useNavigate()
   const [formDataSavePlace, setFormDataSavePlace] = useState({userID: '', name: '', longitude: '', langitude: ''});
-  const [formDataDeletePlace, setFormDeletePlace] = useState({userID: '', name: '', longitude: '', langitude: ''});
+  const [formDataDeletePlace, setFormDataDeletePlace] = useState({userID: '', name: '', longitude: '', langitude: ''});
+  const [formDataGetPlaces, setFormDataGetPlaces] = useState({userID: ''})
 
   const handleSubmitSavePlace = async (event) => {
     event.preventDefault();
@@ -27,6 +28,19 @@ export default function TestAPIs() {
         'Content-Type': 'application/json'
         },
         body: JSON.stringify(formDataDeletePlace)
+    });
+    const data = await response.json();
+    console.log(data);
+  }
+
+  const handleSubmitGetPlaces = async (event) => {
+    event.preventDefault();
+    const response = await fetch('/api/getPlaces', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formDataGetPlaces)
     });
     const data = await response.json();
     console.log(data);
@@ -70,21 +84,31 @@ export default function TestAPIs() {
       <form onSubmit={handleSubmitDeletePlace}>
       <div>
         <h4>userID</h4>
-        <input type="text" name="userID" value={formDataDeletePlace.userID} onChange={(e) => setFormDeletePlace({...formDataDeletePlace, userID: e.target.value})} />
+        <input type="text" name="userID" value={formDataDeletePlace.userID} onChange={(e) => setFormDataDeletePlace({...formDataDeletePlace, userID: e.target.value})} />
       </div>
       <div>
         <h4>Name</h4>
-        <input type="text" name="name" value={formDataDeletePlace.name} onChange={(e) => setFormDeletePlace({...formDataDeletePlace, name: e.target.value})} />
+        <input type="text" name="name" value={formDataDeletePlace.name} onChange={(e) => setFormDataDeletePlace({...formDataDeletePlace, name: e.target.value})} />
       </div>
       <div>
         <h4>Longitude</h4>
-        <input type="text" name="longitude" value={formDataDeletePlace.longitude} onChange={(e) => setFormDeletePlace({...formDataDeletePlace, longitude: e.target.value})} />
+        <input type="text" name="longitude" value={formDataDeletePlace.longitude} onChange={(e) => setFormDataDeletePlace({...formDataDeletePlace, longitude: e.target.value})} />
       </div>
       <div>
         <h4>Langitude</h4>
-        <input type="text" name="langitude" value={formDataDeletePlace.langitude} onChange={(e) => setFormDeletePlace({...formDataDeletePlace, langitude: e.target.value})} />
+        <input type="text" name="langitude" value={formDataDeletePlace.langitude} onChange={(e) => setFormDataDeletePlace({...formDataDeletePlace, langitude: e.target.value})} />
       </div>
       <button type="submit">Delete Place</button>
+      </form>
+
+
+      <h2>Test getPlaces</h2>
+      <form onSubmit={handleSubmitGetPlaces}>
+      <div>
+        <h4>userID</h4>
+        <input type="text" name="userID" value={formDataGetPlaces.userID} onChange={(e) => setFormDataGetPlaces({...formDataGetPlaces, userID: e.target.value})} />
+      </div>
+      <button type="submit">Get Places</button>
       </form>
     </div>
   );
