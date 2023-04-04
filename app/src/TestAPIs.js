@@ -6,6 +6,20 @@ export default function TestAPIs() {
   const [formDataSavePlace, setFormDataSavePlace] = useState({userID: '', name: '', longitude: '', langitude: ''});
   const [formDataDeletePlace, setFormDataDeletePlace] = useState({userID: '', name: '', longitude: '', langitude: ''});
   const [formDataGetPlaces, setFormDataGetPlaces] = useState({userID: ''})
+  const [formDataLogin, setFormDataLogin] = useState({username: '', password: ''})
+
+  const handleSubmitLogin = async (event) => {
+    event.preventDefault();
+    const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formDataLogin)
+    });
+    const data = await response.json();
+    console.log(data);
+  }
 
   const handleSubmitSavePlace = async (event) => {
     event.preventDefault();
@@ -57,6 +71,19 @@ export default function TestAPIs() {
         Click to go to home
       </p>
       
+      
+      <h2>Test login</h2>
+      <form onSubmit={handleSubmitLogin}>
+      <div>
+        <h4>Username</h4>
+        <input type="text" name="username" value={formDataLogin.userID} onChange={(e) => setFormDataLogin({...formDataLogin, username: e.target.value})} />
+      </div>
+      <div>
+        <h4>Password</h4>
+        <input type="text" name="password" value={formDataLogin.userID} onChange={(e) => setFormDataLogin({...formDataLogin, password: e.target.value})} />
+      </div>
+      <button type="submit">Login</button>
+      </form>
 
       <h2>Test savePlace</h2>
       <form onSubmit={handleSubmitSavePlace}>
