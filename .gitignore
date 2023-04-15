@@ -4,3 +4,9 @@
 # app directory
 app/node_modules
 app/build
+
+# api directory
+
+api/node_modules
+api/package-lock.json
+api/.env
