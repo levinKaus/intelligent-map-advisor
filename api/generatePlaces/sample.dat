@@ -1,0 +1,16 @@
+{
+  "places": [
+    {
+      "action": "restaurant",
+      "location": "ekamai"
+    },
+    {
+      "action": "tourism",
+      "location": "lille"
+    },
+    {
+      "action": "medical",
+      "location": "seattle"
+    }
+  ]
+}
