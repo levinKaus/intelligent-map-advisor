@@ -13,20 +13,7 @@ module.exports = async function (context, req) {
 
     const googleAPI = process.env.GOOGLE_MAPS_API_KEY
 
-    const places = [
-      {
-        action: "restaurant",
-        location: "ekamai"
-      },
-      {
-        action: "tourism",
-        location: "lille"
-      },
-      {
-        action: "medical",
-        location: "seattle"
-      }
-    ];
+    const places = req.body.places
 
     const result = await Promise.all(places.map(async place => {
       try {
