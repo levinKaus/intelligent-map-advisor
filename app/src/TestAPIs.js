@@ -7,7 +7,7 @@ export default function TestAPIs() {
   const [formDataDeletePlace, setFormDataDeletePlace] = useState({ userID: '', name: '', longitude: '', langitude: '' });
   const [formDataGetPlaces, setFormDataGetPlaces] = useState({ userID: '' })
   const [formDataLogin, setFormDataLogin] = useState({ username: '', password: '' })
-  const [formDataGeneratePlaces, setFormDataGeneratePlaces] = useState( places: [{ action: '', location: '' }])
+  const [formDataGeneratePlaces, setFormDataGeneratePlaces] = useState({ places: [{ action: '', location: '' }]})
 
 
   const handleSubmitLogin = async (event) => {
