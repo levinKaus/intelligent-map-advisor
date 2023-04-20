@@ -2,18 +2,22 @@ require('dotenv').config();
 const { Configuration, OpenAIApi } = require("openai");
 
 module.exports = async function (context, req) {
-  if (req.body.places && req.body.places.length != 0) {
+  try {
+    if (!req.body.places || req.body.places.length === 0) {
+      return context.res.status(400).send({ message: "Places List Does not exist or is Empty" });
+    }
+
     const configuration = new Configuration({
       apiKey: process.env['OPENAI_API_KEY'],
       basePath: "https://api.pawan.krd/v1",
     });
-
+    
     const openai = new OpenAIApi(configuration);
 
     const googleAPI = process.env['GOOGLE_MAPS_API_KEY'];
 
-    try {
-      const result = await Promise.all(req.body.places.map(async place => {
+    const result = await Promise.all(req.body.places.map(async place => {
+      try {
         const completion = await openai.createCompletion({
           model: "text-davinci-003",
           prompt: `Recommend me 5 ${place.action} places that are in ${place.location}. Give me only the names.`,
@@ -46,11 +50,11 @@ module.exports = async function (context, req) {
               };
             } else {
               console.log(`Geocode was not successful for the following reason: ${data.status}`);
-              throw new Error("Geocode was not successful for the following reason: " + data.status);
+              return null;
             }
           } catch (error) {
             console.error(error);
-            throw new Error("An error occurred while fetching the locations.");
+            return null;
           }
         });
 
@@ -58,22 +62,18 @@ module.exports = async function (context, req) {
         return {
           locations: locations.filter(location => location !== null)
         };
-      }));
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    }));
 
-      context.res.status(200).send({
-        message: "Places List is Present and not Empty",
-        result: result
-      });
-    } catch (error) {
-      console.error(error);
-      context.res.status(400).send({
-        message: "An error occurred while fetching the locations."
-      });
-    }
-
-  } else {
-    context.res.status(400).send({
-      message: "Places List Does not exist or is Empty"
+    context.res.status(200).send({
+      message: "Places List is Present and not Empty",
+      result: result.filter(r => r !== null)
     });
+  } catch (error) {
+    console.error(error);
+    context.res.status(500).send({ message: error });
   }
 }
