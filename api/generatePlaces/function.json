@@ -8,13 +8,14 @@
       "methods": [
         "get",
         "post"
-      ],
-      "route": "example"
+      ]
+    },    
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
     }
   ],
-  "disabled": false,
-  "scriptFile": "../dist/example/index.js",
-  "entryPoint": "index",
   "extensions": {
     "http": {
       "routePrefix": "",
