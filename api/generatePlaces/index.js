@@ -2,7 +2,7 @@ require('dotenv').config();
 const { Configuration, OpenAIApi } = require("openai");
 
 module.exports = async function (context, req) {
-  if (req.body.places && !req.body.places.lenght != 0) {
+  if (req.body.places && req.body.places.lenght != 0) {
 
     const configuration = new Configuration({
       apiKey: process.env.OPENAI_API_KEY,
@@ -71,7 +71,8 @@ module.exports = async function (context, req) {
     context.res.status(200).send(
       {
         message: "Places List is Present and not Empty",
-        result: result
+        result: result,
+        places: places
       });
 
   } else {
