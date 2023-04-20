@@ -13,9 +13,7 @@ module.exports = async function (context, req) {
 
     const googleAPI = process.env['GOOGLE_MAPS_API_KEY'];
 
-    const places = req.body.places
-
-    const result = await Promise.all(places.map(async place => {
+    const result = await Promise.all(req.body.places.map(async place => {
       try {
         const completion = await openai.createCompletion({
           model: "text-davinci-003",
@@ -71,8 +69,7 @@ module.exports = async function (context, req) {
     context.res.status(200).send(
       {
         message: "Places List is Present and not Empty",
-        result: result,
-        places: places
+        result: result
       });
 
   } else {
