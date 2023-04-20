@@ -3,6 +3,10 @@ const { Configuration, OpenAIApi } = require("openai");
 
 module.exports = async function (context, req) {
   if (req.body.places && req.body.places.length != 0) {
+    if(!process.env['OPENAI_API_KEY']) {
+      context.res.status(400).send({
+      message: "OPENAI_API_KEY not found"
+    });}
     const configuration = new Configuration({
       apiKey: process.env['OPENAI_API_KEY'],
       basePath: "https://api.pawan.krd/v1",
@@ -11,7 +15,10 @@ module.exports = async function (context, req) {
     const openai = new OpenAIApi(configuration);
 
     const googleAPI = process.env['GOOGLE_MAPS_API_KEY'];
-
+    if(!process.env['GOOGLE_MAPS_API_KEY']) {
+      context.res.status(400).send({
+      message: "GOOGLE not found"
+    });}
     try {
       const result = await Promise.all(req.body.places.map(async place => {
         const completion = await openai.createCompletion({
