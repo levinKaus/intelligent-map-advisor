@@ -156,11 +156,11 @@ export default function TestAPIs() {
       <form onSubmit={handleSubmitGeneratePlaces}>
         <div>
           <h4>Search Area/Location Name</h4>
-          <input type="text" name="location" value={formDataGeneratePlaces.location} onChange={(e) => setFormDataGeneratePlaces({ ...formDataGeneratePlaces, location: e.target.value })} />
+          <input type="text" name="location" value={formDataGeneratePlaces.location} onChange={(e) => setFormDataGeneratePlaces({ ...formDataGeneratePlaces, places[0].location: e.target.value })} />
         </div>
         <div>
           <h4>What to do:</h4>
-          <input type="text" name="action" value={formDataGeneratePlaces.action} onChange={(e) => setFormDataGeneratePlaces({ ...formDataGeneratePlaces, action: e.target.value })} />
+          <input type="text" name="action" value={formDataGeneratePlaces.action} onChange={(e) => setFormDataGeneratePlaces({ ...formDataGeneratePlaces, places[0].action: e.target.value })} />
         </div>
         <button type="submit">Generate Places</button>
       </form>
