@@ -67,7 +67,7 @@ module.exports = async function (context, req) {
     } catch (error) {
       console.error(error);
       context.res.status(400).send({
-        message: "An error occurred while fetching the locations."
+        message: `An error occurred while fetching the locations: ${error}`
       });
     }
 
