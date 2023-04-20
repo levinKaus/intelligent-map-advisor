@@ -5,13 +5,13 @@ module.exports = async function (context, req) {
   if (req.body.places && req.body.places.lenght != 0) {
 
     const configuration = new Configuration({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: process.env['OPENAI_API_KEY'],
       basePath: "https://api.pawan.krd/v1",
     });
-
+    
     const openai = new OpenAIApi(configuration);
 
-    const googleAPI = process.env.GOOGLE_MAPS_API_KEY
+    const googleAPI = process.env['GOOGLE_MAPS_API_KEY'];
 
     const places = req.body.places
 
