@@ -8,12 +8,30 @@
       "methods": [
         "get",
         "post"
-      ]
-    },
-    {
-      "type": "http",
-      "direction": "out",
-      "name": "res"
+      ],
+      "route": "example"
     }
-  ]
+  ],
+  "disabled": false,
+  "scriptFile": "../dist/example/index.js",
+  "entryPoint": "index",
+  "extensions": {
+    "http": {
+      "routePrefix": "",
+      "cors": {
+        "allowedOrigins": [
+          "api.pawan.krd",
+          "maps.googleapis.com"
+        ],
+        "allowedMethods": [
+          "GET",
+          "POST"
+        ],
+        "allowedHeaders": [
+          "Content-Type",
+          "Authorization"
+        ]
+      }
+    }
+  }
 }
