@@ -7,7 +7,9 @@ export default function TestAPIs() {
   const [formDataDeletePlace, setFormDataDeletePlace] = useState({ userID: '', name: '', longitude: '', langitude: '' });
   const [formDataGetPlaces, setFormDataGetPlaces] = useState({ userID: '' })
   const [formDataLogin, setFormDataLogin] = useState({ username: '', password: '' })
-  const [formDataGeneratePlaces, setFormDataGeneratePlaces] = useState({ places: [{ action: '', location: '' }]})
+  const [formActionDataGeneratePlaces, setformActionDataGeneratePlaces] = useState()
+  const [formLocationDataGeneratePlaces, setformLocationDataGeneratePlaces] = useState()
+
 
 
   const handleSubmitLogin = async (event) => {
@@ -69,7 +71,14 @@ export default function TestAPIs() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(formDataGeneratePlaces)
+      body: JSON.stringify({
+        places: [
+          {
+            action: formActionDataGeneratePlaces,
+            location: formLocationDataGeneratePlaces
+          }
+        ]
+      })
     });
     const data = await response.json();
     console.log(data);
@@ -156,29 +165,11 @@ export default function TestAPIs() {
       <form onSubmit={handleSubmitGeneratePlaces}>
         <div>
           <h4>Search Area/Location Name</h4>
-          <input type="text" name="location" value={formDataGeneratePlaces.location} onChange={(e) => setFormDataGeneratePlaces({
-            ...formDataGeneratePlaces,
-            places: [
-              {
-                ...formDataGeneratePlaces.places[0],
-                location: e.target.value
-              },
-              ...formDataGeneratePlaces.places.slice(1)
-            ]
-          })} />
+          <input type="text" name="location" value={formDataGeneratePlaces.location} onChange={(e) => setformLocationDataGeneratePlaces(e.target.value)} />
         </div>
         <div>
           <h4>What to do:</h4>
-          <input type="text" name="action" value={formDataGeneratePlaces.action} onChange={(e) => setFormDataGeneratePlaces({
-            ...formDataGeneratePlaces,
-            places: [
-              {
-                ...formDataGeneratePlaces.places[0],
-                action: e.target.value
-              },
-              ...formDataGeneratePlaces.places.slice(1)
-            ]
-          })} />
+          <input type="text" name="action" value={formDataGeneratePlaces.action} onChange={(e) => setformActionDataGeneratePlaces(e.target.value)} />
         </div>
         <button type="submit">Generate Places</button>
       </form>
