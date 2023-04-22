@@ -8,8 +8,7 @@ module.exports = async function (context, req) {
       message: "OPENAI_API_KEY not found"
     });}
     const configuration = new Configuration({
-      apiKey: process.env['OPENAI_API_KEY'],
-      basePath: "https://api.pawan.krd/v1",
+      apiKey: process.env['OPENAI_API_KEY']
     });
 
     const openai = new OpenAIApi(configuration);

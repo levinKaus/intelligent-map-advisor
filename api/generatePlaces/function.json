@@ -21,7 +21,6 @@
       "routePrefix": "",
       "cors": {
         "allowedOrigins": [
-          "api.pawan.krd",
           "maps.googleapis.com"
         ],
         "allowedMethods": [
