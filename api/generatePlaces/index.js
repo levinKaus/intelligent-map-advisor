@@ -57,7 +57,7 @@ module.exports = async function (context, req) {
             }
           } catch (error) {
             console.error(error);
-            throw new Error("An error occurred while fetching the locations.");
+            throw new Error("Google Error: " + error);
           }
         });
 
