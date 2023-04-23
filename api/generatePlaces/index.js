@@ -1,5 +1,5 @@
 require('dotenv').config();
-import fetch from "node-fetch";
+const fetch = require("node-fetch");
 const { Configuration, OpenAIApi } = require("openai");
 
 module.exports = async function (context, req) {
