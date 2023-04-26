@@ -29,7 +29,7 @@ export default function SignupPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: formData.name,
+          username: formData.username,
           email: formData.email,
           password: md5(formData.password)
         })
@@ -125,7 +125,7 @@ export default function SignupPage() {
           <div className="form-input">
             <label htmlFor="placeType">Password</label>
             <input
-              type="text"
+              type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
@@ -135,7 +135,7 @@ export default function SignupPage() {
           <div className="form-input">
             <label htmlFor="placeType">Confirm Password</label>
             <input
-              type="text"
+              type="password"
               name="passwordConfirm"
               value={formData.passwordConfirm}
               onChange={handleChange}
