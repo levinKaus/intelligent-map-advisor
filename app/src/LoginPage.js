@@ -5,7 +5,7 @@ import "./index.css";
 import logo from "./assets/logo.png";
 
 export default function LoginPage() {
-  const [formData, setFormData] = useState({ username: '',  password: '' });
+  const [formData, setFormData] = useState({ username: '', password: '' });
   const [errorMessage, setErrorMessage] = useState("");
   const navigateTo = useNavigate();
 
@@ -29,6 +29,8 @@ export default function LoginPage() {
         }),
       });
       if (response.ok) {
+        // Set cookie to indicate that the user has logged in
+        document.cookie = "loggedIn=true; path=/";
         navigateTo("/");
       } else {
         const data = await response.json();
@@ -38,6 +40,7 @@ export default function LoginPage() {
       console.error(error);
     }
   };
+
 
   return (
     <div className="home-container">
@@ -96,7 +99,9 @@ export default function LoginPage() {
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className="btn-submit">
+          <button type="submit" className="btn-submit" onClick={() => {
+            navigateTo("/");
+          }}>
             Login
           </button>
           <p>New to our site? <a href="/signup">Sign up</a></p>
