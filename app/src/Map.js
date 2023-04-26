@@ -24,7 +24,7 @@ function Map() {
   );
 
   const [resultList, setResultList] = useState([]);
-  const [map, setMap] = useState(null);
+  const [map, setMap] = useState(null); //eslint-disable-line
 
   useEffect(() => {
     dispatch(fetchLocations());

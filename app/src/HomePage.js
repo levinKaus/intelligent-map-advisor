@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Map from "./Map";
+import savedPlaces from "./savedPlaces";
 import { Provider } from "react-redux";
 import store from "./redux/actions/store.js";
 import "./index.css";
@@ -20,12 +21,7 @@ export default function HomePage() {
     { name: "Map 3", area: "Rome" },
   ]); // sample list of saved maps
 
-  const [savedPlaces] = useState([
-    { name: "Paris", address: "123 Main St." },
-    { name: "London", address: "456 Elm St." },
-    { name: "Rome", address: "789 Oak St." },
-  ]); // sample list of saved places
-  const [showSavedPlacesTextbox, setShowSavedPlacesTextbox] = useState(false);
+  const [showSavedPlaces, setShowSavedPlaces] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,20 +63,19 @@ export default function HomePage() {
         </p>
         <div className="saved-places">
           <p
-            onClick={() => setShowSavedPlacesTextbox(true)}
-            style={{ marginTop: "0px", marginLeft: "-10px" }}
+            onClick={() => setShowSavedPlaces(!showSavedPlaces)}
           >
             ‧ Saved Places
           </p>
-          {showSavedPlacesTextbox && (
-            <div className="saved-places-textbox">
-              {savedPlaces.map((place) => (
-                <div key={place.name}>
-                  <p style={{ marginTop: "-15px", fontSize: "15px" }}>{`${place.name}, ${place.address}`}</p>
-                </div>
-              ))}
-            </div>
-          )}
+          {showSavedPlaces && <savedPlaces />}
+          <div className="saved-places-textbox">
+            {savedPlaces.map((place) => (
+              <div key={place.name}>
+                <p style={{ marginTop: "-15px", fontSize: "15px" }}>{`${place.name}, ${place.address}`}</p>
+                <savedPlaces />
+              </div>
+            ))}
+          </div>
         </div>
         <div className="saved-maps">
           <p style={{ marginTop: "0px", marginLeft: "-20px" }}>‧ Saved Maps</p>
@@ -114,6 +109,13 @@ export default function HomePage() {
                 mapName={mapName}
                 setShowMap={setShowMap}
               />
+            </Provider>
+          </div>
+        ) : showSavedPlaces ? (
+          <div className="save-place-container">
+            <h2>Saved Places</h2>
+            <Provider store={store}>
+              <savedPlaces />
             </Provider>
           </div>
         ) : (
