@@ -24,6 +24,7 @@ function Map() {
   );
 
   const [resultList, setResultList] = useState([]);
+  const [map, setMap] = useState(null);
 
   useEffect(() => {
     dispatch(fetchLocations());
@@ -45,15 +46,15 @@ function Map() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
   });
 
-  const [setMap] = useState(null);
-
-  const onLoad = (map) => {
+  const onLoad = React.useCallback(function callback(map) {
+    const bounds = new window.google.maps.LatLngBounds();
+    map.fitBounds(bounds);
     setMap(map);
-  };
+  }, []);
 
-  const onUnmount = () => {
+  const onUnmount = React.useCallback(function callback(map) {
     setMap(null);
-  };
+  }, []);
 
   const handleSaveClick = (address) => {
     // Implement your save logic here

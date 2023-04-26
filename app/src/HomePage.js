@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Map from "./Map.js";
+import Map from "./Map";
 import { Provider } from "react-redux";
 import store from "./redux/actions/store.js";
 import "./index.css";
