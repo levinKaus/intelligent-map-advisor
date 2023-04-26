@@ -7,12 +7,12 @@ import logo from "./assets/logo.png"; // import the logo image
 export default function SignupPage() {
   const navigateTo = useNavigate();
   const [formData, setFormData] = useState({ username: '', email: '', password: '', passwordConfirm: '' });
-  const [validUsername, setValidUsername] = useState(false)
-  const [validEmail, setValidEmail] = useState(false)
-  const [validPasswordFormat, setValidPasswordFormat] = useState(false)
-  const [validPasswordConfirm, setValidPasswordConfirm] = useState(false)
-  const [validPassword, setValidPassword] = useState(false)
-  const [validForm, setValidForm] = useState(false)
+  const [validUsername, setValidUsername] = useState(false);
+  const [validEmail, setValidEmail] = useState(false);
+  const [validPasswordFormat, setValidPasswordFormat] = useState(false);
+  const [validPasswordConfirm, setValidPasswordConfirm] = useState(false);
+  const [validPassword, setValidPassword] = useState(false);
+  const [validForm, setValidForm] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -22,7 +22,7 @@ export default function SignupPage() {
     }
   }
 
-  const handleSubmit = async (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
     if (validForm) {
       const response = await fetch('/api/signup', {
@@ -96,7 +96,7 @@ export default function SignupPage() {
           ‧ Log In
         </p>
         <div className="footer-text">
-          <p> Travel planner with expert guidance and personalized recommendations for your dream vacation. text-align: left</p>
+          <p> Travel planner with expert guidance and personalized recommendations for your dream vacation.</p>
         </div>
       </div>
       <div className="form-container">
@@ -143,7 +143,9 @@ export default function SignupPage() {
             />
           </div>
           {validForm && (
-            <button type="submit"  style={{ marginBottom: "15px"}}>Sign Up</button>
+            <button type="submit" style={{ marginBottom: "15px" }} onClick={() => {
+              navigateTo("/login");
+            }}>Sign Up</button>
           )}
           {validUsername === false && (
             <p> Username must be at least 4 characters </p>
@@ -158,16 +160,15 @@ export default function SignupPage() {
             <p>Passwords need to match</p>
           )}
           <span>
-          
-          <p
-            onClick={() => {
-              navigateTo("/login");
-            }} 
-            style={{ marginBottom: "-5px"}}
-          > Already have an account? &nbsp;&nbsp;
-            <a href="/login">Click to go to login</a>
-          </p>
-        </span>
+            <p
+              onClick={() => {
+                navigateTo("/login");
+              }}
+              style={{ marginBottom: "-5px" }}
+            > Already have an account? &nbsp;&nbsp;
+              <a href="/login">Click to go to login</a>
+            </p>
+          </span>
         </form>
       </div>
     </div>
