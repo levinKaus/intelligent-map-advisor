@@ -1,33 +1,31 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import md5 from "md5";
 import "./index.css";
 import logo from "./assets/logo.png";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({ username: '',  password: '' });
   const [errorMessage, setErrorMessage] = useState("");
   const navigateTo = useNavigate();
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
+  function handleChange(event) {
+    const { name, value } = event.target;
+    const maxLengths = { username: 21, password: 61 };
+    if (value.length < maxLengths[name]) {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
+  }
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
       const response = await fetch("/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username,
-          password,
+          username: formData.username,
+          password: md5(formData.password)
         }),
       });
       if (response.ok) {
@@ -80,9 +78,10 @@ export default function LoginPage() {
               type="text"
               className="form-control"
               id="username"
+              name="username"
               placeholder="Enter username"
-              value={username}
-              onChange={handleUsernameChange}
+              value={formData.username}
+              onChange={handleChange}
             />
           </div>
           <div className="form-group">
@@ -91,9 +90,10 @@ export default function LoginPage() {
               type="password"
               className="form-control"
               id="password"
+              name="password"
               placeholder="Enter password"
-              value={password}
-              onChange={handlePasswordChange}
+              value={formData.password}
+              onChange={handleChange}
             />
           </div>
           <button type="submit" className="btn-submit">
