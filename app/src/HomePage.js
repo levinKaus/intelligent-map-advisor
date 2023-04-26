@@ -27,14 +27,25 @@ export default function HomePage() {
     e.preventDefault();
     setShowMap(true);
     setMapName(area);
-    const apiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY; // replace with your Google Maps API key
-    const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${area}+${placeType}+in+${country}&key=${apiKey}`;
-    const response = await fetch(url);
+    const response = await fetch('/api/generatePlaces', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        places: [
+          {
+            action: placeType,
+            location: area
+          }
+        ]
+      })
+    });
     const data = await response.json();
-    const newLocations = data.results.slice(0, 5).map((result) => ({
-      name: result.name,
-      lat: result.geometry.location.lat,
-      lng: result.geometry.location.lng,
+    const newLocations = data.result.map((place) => ({
+      name: place.address,
+      lat: place.latitudelatitude,
+      lng: place.longitude,
     }));
     setLocations(newLocations);
   };
