@@ -81,7 +81,7 @@ label {
   display: block;
 }
 
-input[type="text"] {
+input[type="text"], input[type="password"]{
   margin-bottom: 20px;
   padding: 10px;
   border-radius: 5px;

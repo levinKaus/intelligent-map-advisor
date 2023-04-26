@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Map from "./Map.js";
-import savedPlaces from "./savedPlaces.js";
+//import savedPlaces from "./savedPlaces.js";
 import { Provider } from "react-redux";
 import store from "./redux/actions/store.js";
 import "./index.css";
@@ -78,6 +78,7 @@ export default function HomePage() {
           >
             ‧ Saved Places
           </p>
+          {/*
           {showSavedPlaces && <savedPlaces />}
           <div className="saved-places-textbox">
             {savedPlaces.map((place) => (
@@ -87,6 +88,7 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+          */}
         </div>
         <div className="saved-maps">
           <p style={{ marginTop: "0px", marginLeft: "-20px" }}>‧ Saved Maps</p>
@@ -130,44 +132,50 @@ export default function HomePage() {
             </Provider>
           </div>
         ) : (
-          <form onSubmit={handleSubmit}>
-            <div className="input-container">
-              <label htmlFor="area">Where do you want to go?</label>
-              <input
-                type="text"
-                id="area"
-                name="area"
-                value={area}
-                onChange={(e) => setArea(e.target.value)}
-                required
-              />
-            </div>
-            <div className="input-container">
-              <label htmlFor="placeType">
-                What type of place are you looking for?
-              </label>
-              <input
-                type="text"
-                id="placeType"
-                name="placeType"
-                value={placeType}
-                onChange={(e) => setPlaceType(e.target.value)}
-                required
-              />
-            </div>
-            <div className="input-container">
-              <label htmlFor="country">Which country?</label>
-              <input
-                type="text"
-                id="country"
-                name="country"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                required
-              />
-            </div>
-            <button type="submit">Search</button>
-          </form>
+          <div className="form-container">
+            <form onSubmit={handleSubmit}>
+            <h1>Search Recommendation Places</h1>
+              <div className="input-container">
+                <label htmlFor="area">Where do you want to go?</label>
+                <input
+                  type="text"
+                  id="area"
+                  name="area"
+                  placeholder="Enter location"
+                  value={area}
+                  onChange={(e) => setArea(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="input-container">
+                <label htmlFor="placeType">
+                  What type of place are you looking for?
+                </label>
+                <input
+                  type="text"
+                  id="placeType"
+                  name="placeType"
+                  placeholder="Enter location type"
+                  value={placeType}
+                  onChange={(e) => setPlaceType(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="input-container">
+                <label htmlFor="country">Which country?</label>
+                <input
+                  type="text"
+                  id="country"
+                  name="country"
+                  placeholder="Enter country"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit">Search</button>
+            </form>
+          </div>
         )}
       </div>
     </div >

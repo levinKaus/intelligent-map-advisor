@@ -107,9 +107,9 @@ export default function SignupPage() {
             <input
               type="text"
               name="username"
+              placeholder="Enter username"
               value={formData.username}
               onChange={handleChange}
-              style={{ marginBottom: "5px", border: "1px solid #ccc" }}
             />
           </div>
           <div className="form-input">
@@ -117,9 +117,9 @@ export default function SignupPage() {
             <input
               type="text"
               name="email"
+              placeholder="Enter email"
               value={formData.email}
               onChange={handleChange}
-              style={{ marginBottom: "5px", border: "1px solid #ccc" }}
             />
           </div>
           <div className="form-input">
@@ -127,9 +127,9 @@ export default function SignupPage() {
             <input
               type="password"
               name="password"
+              placeholder="Enter password"
               value={formData.password}
               onChange={handleChange}
-              style={{ marginBottom: "5px", border: "1px solid #ccc" }}
             />
           </div>
           <div className="form-input">
@@ -137,9 +137,9 @@ export default function SignupPage() {
             <input
               type="password"
               name="passwordConfirm"
+              placeholder="Enter password"
               value={formData.passwordConfirm}
               onChange={handleChange}
-              style={{ marginBottom: "15px", border: "1px solid #ccc" }}
             />
           </div>
           {validForm && (
