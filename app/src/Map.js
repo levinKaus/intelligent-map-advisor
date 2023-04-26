@@ -45,7 +45,7 @@ function Map() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
   });
 
-  const [map, setMap] = useState(null);
+  const [setMap] = useState(null);
 
   const onLoad = (map) => {
     setMap(map);

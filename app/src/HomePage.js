@@ -14,18 +14,17 @@ export default function HomePage() {
   const [showMap, setShowMap] = useState(false);
   const [locations, setLocations] = useState([]);
   const [mapName, setMapName] = useState("");
-  const [savedMaps, setSavedMaps] = useState([
+  const [savedMaps] = useState([
     { name: "Map 1", area: "Paris" },
     { name: "Map 2", area: "London" },
     { name: "Map 3", area: "Rome" },
   ]); // sample list of saved maps
 
-  const [savedPlaces, setSavedPlaces] = useState([
+  const [savedPlaces] = useState([
     { name: "Paris", address: "123 Main St." },
     { name: "London", address: "456 Elm St." },
     { name: "Rome", address: "789 Oak St." },
   ]); // sample list of saved places
-  const [showSavedPlaces, setShowSavedPlaces] = useState(false);
   const [showSavedPlacesTextbox, setShowSavedPlacesTextbox] = useState(false);
 
   const handleSubmit = async (e) => {

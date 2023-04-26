@@ -31,7 +31,6 @@ export default function LoginPage() {
         }),
       });
       if (response.ok) {
-        const data = await response.json();
         navigateTo("/");
       } else {
         const data = await response.json();
