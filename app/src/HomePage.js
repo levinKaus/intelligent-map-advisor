@@ -1,21 +1,47 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./index.css"; // import the CSS file for styling
-import logo from "./assets/logo.png"; // import the logo image
+import Map from "./Map.js";
+import { Provider } from "react-redux";
+import store from "./redux/actions/store.js";
+import "./index.css";
+import logo from "./assets/logo.png";
 
 export default function HomePage() {
   const navigateTo = useNavigate();
-
-  // create state variables for the form inputs
   const [area, setArea] = useState("");
   const [placeType, setPlaceType] = useState("");
   const [country, setCountry] = useState("");
+  const [showMap, setShowMap] = useState(false);
+  const [locations, setLocations] = useState([]);
+  const [mapName, setMapName] = useState("");
+  const [savedMaps, setSavedMaps] = useState([
+    { name: "Map 1", area: "Paris" },
+    { name: "Map 2", area: "London" },
+    { name: "Map 3", area: "Rome" },
+  ]); // sample list of saved maps
 
-  // function to handle form submission
-  const handleSubmit = (e) => {
+  const [savedPlaces, setSavedPlaces] = useState([
+    { name: "Paris", address: "123 Main St." },
+    { name: "London", address: "456 Elm St." },
+    { name: "Rome", address: "789 Oak St." },
+  ]); // sample list of saved places
+  const [showSavedPlaces, setShowSavedPlaces] = useState(false);
+  const [showSavedPlacesTextbox, setShowSavedPlacesTextbox] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // do something with the form inputs, e.g. send them to an API
-    console.log(area, placeType, country);
+    setShowMap(true);
+    setMapName(area);
+    const apiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY; // replace with your Google Maps API key
+    const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${area}+${placeType}+in+${country}&key=${apiKey}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const newLocations = data.results.slice(0, 5).map((result) => ({
+      name: result.name,
+      lat: result.geometry.location.lat,
+      lng: result.geometry.location.lng,
+    }));
+    setLocations(newLocations);
   };
 
   return (
@@ -24,11 +50,11 @@ export default function HomePage() {
         <div className="logo-container">
           <img src={logo} alt="Logo" />
         </div>
-        <p 
+        <p
           onClick={() => {
             navigateTo("/signup");
           }}
-          style={{ marginTop: "175px", marginLeft: "-65px" }}
+          style={{ marginTop: "160px", marginLeft: "-54px" }}
         >
           ‧ Sign Up
         </p>
@@ -36,58 +62,102 @@ export default function HomePage() {
           onClick={() => {
             navigateTo("/login");
           }}
-          style={{ marginTop: "10px", marginLeft: "-75px" }}
+          style={{ marginTop: "0px", marginLeft: "-70px" }}
         >
           ‧ Log In
         </p>
-        <p
-          onClick={() => {
-            navigateTo("/testapis");
-          }}
-          style={{ marginTop: "10px", marginLeft: "-50px" }}
-        >
-          ‧ Test APIs
-        </p>
+        <div className="saved-places">
+          <p
+            onClick={() => setShowSavedPlacesTextbox(true)}
+            style={{ marginTop: "0px", marginLeft: "-10px" }}
+          >
+            ‧ Saved Places
+          </p>
+          {showSavedPlacesTextbox && (
+            <div className="saved-places-textbox">
+              {savedPlaces.map((place) => (
+                <div key={place.name}>
+                  <p style={{ marginTop: "-15px", fontSize: "15px" }}>{`${place.name}, ${place.address}`}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="saved-maps">
+          <p style={{ marginTop: "0px", marginLeft: "-20px" }}>‧ Saved Maps</p>
+          {savedMaps.map((savedMap, index) => (
+            <div
+              key={index}
+              onClick={() => {
+                setArea(savedMap.area);
+                setMapName(savedMap.name);
+                setShowMap(true);
+              }}
+            >
+              <p style={{ marginTop: "-15px", fontSize: "15px" }}>{`${savedMap.name}, ${savedMap.area}`}</p>
+            </div>
+          ))}
+        </div>
         <div className="footer-text">
-          <p> Travel planner with expert guidance and personalized recommendations for your dream vacation. text-align: left</p>
+          <p>
+            {" "}
+            Travel planner with expert guidance and personalized recommendations
+            for your dream vacation.
+          </p>
         </div>
       </div>
-      <div className="form-container">
-        <form onSubmit={handleSubmit}>
-          <h1>Browse Travel Suggestions</h1>
-          <div className="form-input">
-            <label htmlFor="area">Area:</label>
-            <input
-              type="text"
-              id="area"
-              value={area}
-              onChange={(e) => setArea(e.target.value)}
-              style={{ width: "200px", marginBottom: "10px", border: "1px solid #ccc" }}
-            />
+      <div className="main-content">
+        {showMap ? (
+          <div className="map-container" style={{ marginLeft: "-17%", marginTop: "4%" }}>
+            <Provider store={store}>
+              <Map
+                locations={locations}
+                mapName={mapName}
+                setShowMap={setShowMap}
+              />
+            </Provider>
           </div>
-          <div className="form-input">
-            <label htmlFor="placeType">Place Type:</label>
-            <input
-              type="text"
-              id="placeType"
-              value={placeType}
-              onChange={(e) => setPlaceType(e.target.value)}
-              style={{ width: "200px", marginBottom: "10px", border: "1px solid #ccc" }}
-            />
-          </div>
-          <div className="form-input">
-            <label htmlFor="country">Country:</label>
-            <input
-              type="text"
-              id="country"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              style={{ width: "200px", marginBottom: "30px", border: "1px solid #ccc" }}
-            />
-          </div>
-          <button type="submit">Go</button>
-        </form>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div className="input-container">
+              <label htmlFor="area">Where do you want to go?</label>
+              <input
+                type="text"
+                id="area"
+                name="area"
+                value={area}
+                onChange={(e) => setArea(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-container">
+              <label htmlFor="placeType">
+                What type of place are you looking for?
+              </label>
+              <input
+                type="text"
+                id="placeType"
+                name="placeType"
+                value={placeType}
+                onChange={(e) => setPlaceType(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-container">
+              <label htmlFor="country">Which country?</label>
+              <input
+                type="text"
+                id="country"
+                name="country"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit">Search</button>
+          </form>
+        )}
       </div>
-    </div>
+    </div >
   );
 }

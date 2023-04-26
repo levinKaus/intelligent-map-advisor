@@ -145,15 +145,71 @@ body {
   border: 1px solid gray;
   border-radius: 5px;
   margin-bottom: 10px;
-  padding: 5px;
   width: 100%;
-  max-width: 400px;
+  max-width: 200px;
 }
 
 .home-container {
+  display: flex;
   background-image: url(./assets/background.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
 }
 
+.result-container {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  max-width: 750px;
+  border-radius: 15px;
+  background-image: url(./assets/form-background.jpg);
+  background-size: cover;
+}
+
+.save-all-button {
+  background-color: #bf7f80;
+  color: white;
+  font-family: 'Handlee';
+  src: url('./assets//fonts/handlee.ttf') format('truetype');
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.save-all-button:hover {
+  background-color: #916162;
+}
+
+.saved-maps {
+  position: relative;
+}
+.saved-maps h3 {
+  cursor: pointer;
+}
+.saved-maps ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: none;
+}
+.saved-maps:hover ul {
+  display: block;
+}
+.saved-map-item {
+  padding: 0px;
+}
+
+.main-content {
+  margin-top: 7%;
+  margin-left: 20%;
+}
