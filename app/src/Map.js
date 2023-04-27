@@ -24,7 +24,7 @@ function Map() {
   );
 
   const [resultList, setResultList] = useState([]);
-  //const [map, setMap] = useState(null);
+  const [map, setMap] = useState(null);
 
   useEffect(() => {
     dispatch(fetchLocations());
@@ -49,11 +49,11 @@ function Map() {
   const onLoad = React.useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds();
     map.fitBounds(bounds);
-    //setMap(map);
+    setMap(map);
   }, []);
 
   const onUnmount = React.useCallback(function callback(map) {
-    //setMap(null);
+    setMap(null);
   }, []);
 
   const handleSaveClick = (address) => {
