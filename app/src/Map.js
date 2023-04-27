@@ -17,14 +17,16 @@ const center = {
   lng: 100.523186,
 };
 
-function Map() {
+function Map({ formLocationDataGeneratePlaces }) {
+  const [formActionDataGeneratePlaces, setFormActionDataGeneratePlaces] = useState("");
   const dispatch = useDispatch();
   const { locations, loading, error } = useSelector(
     (state) => state.locations
   );
 
   const [resultList, setResultList] = useState([]);
-  //const [map, setMap] = useState(null);
+  const [selectedLocations, setSelectedLocations] = useState([]);
+  const [placesData, setPlacesData] = useState([]);
 
   useEffect(() => {
     dispatch(fetchLocations());
@@ -43,27 +45,45 @@ function Map() {
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
+    googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY
   });
 
   const onLoad = React.useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds();
     map.fitBounds(bounds);
-    //setMap(map);
   }, []);
 
-  const onUnmount = React.useCallback(function callback(map) {
-    //setMap(null);
-  }, []);
+  const onUnmount = React.useCallback(function callback(map) { }, []);
 
   const handleSaveClick = (address) => {
-    // Implement your save logic here
-    console.log(`Saved address: ${address}`);
+    // Add the address to the selectedLocations array
+    setSelectedLocations((prevSelectedLocations) => [...prevSelectedLocations, address]);
   };
 
   const handleSaveAllClick = () => {
-    // Implement your save all logic here
-    console.log("Save all clicked");
+    const allAddresses = resultList.map((result) => result.address);
+    setSelectedLocations(allAddresses);
+  };
+
+  const handleSubmitGeneratePlaces = async (event) => {
+    event.preventDefault();
+    const response = await fetch('/api/generatePlaces', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        places: [
+          {
+            action: formActionDataGeneratePlaces,
+            location: formLocationDataGeneratePlaces
+          }
+        ]
+      })
+    });
+    const data = await response.json();
+    console.log(data);
+    setPlacesData(data);
   };
 
   return (
@@ -82,6 +102,12 @@ function Map() {
               position={{ lat: location.latitude, lng: location.longitude }}
             />
           ))}
+          {placesData.map((place) => (
+            <Marker
+              key={place.id}
+              position={{ lat: place.latitude, lng: place.longitude }}
+            />
+          ))}
         </GoogleMap>
       ) : loading ? (
         <div>Loading...</div>
@@ -94,20 +120,53 @@ function Map() {
         <h3>&nbsp;&nbsp;Results:</h3>
         <ul>
           {resultList.map((result, index) => (
-            <li key={index}>
-              {result.name}{" "}
-              <button onClick={() => handleSaveClick(result.address)}>
-                Save
-              </button>
+            <li key
+              ={index}>
+              <div>
+                <p>
+                  <strong>Name:</strong> {result.name}
+                </p>
+                <p>
+                  <strong>Address:</strong> {result.address}
+                </p>
+              </div>
+              <div>
+                <button onClick={() => handleSaveClick(result.address)}>
+                  Save
+                </button>
+              </div>
             </li>
           ))}
         </ul>
-        <button className="save-all-button" onClick={handleSaveAllClick}>
-          Save All
-        </button>
+        <div className="result-buttons">
+          <button onClick={() => handleSaveAllClick()}>Save All</button>
+          <form onSubmit={handleSubmitGeneratePlaces}>
+            <input
+              type="text"
+              placeholder="Action (e.g. eat, drink, visit)"
+              required
+            />
+            <input type="text" placeholder="Location (e.g. Bangkok)" required />
+            <button type="submit">Generate Places</button>
+          </form>
+        </div>
+        {selectedLocations.length > 0 && (
+          <div>
+            <h3>Saved Locations:</h3>
+            <ul>
+              {selectedLocations.map((location, index) => (
+                <li key={index}>{location}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
 export default Map;
+
+
+
+

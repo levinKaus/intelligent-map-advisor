@@ -61,10 +61,10 @@ export default function HomePage() {
           <img src={logo} alt="Logo" />
         </div>
         <p
-        onClick={() => {
-          navigateTo("/testapis");
-        }}
-        style={{ marginTop: "200px", marginLeft: "-70px" }}
+          onClick={() => {
+            navigateTo("/testapis");
+          }}
+          style={{ marginTop: "200px", marginLeft: "-70px" }}
         >
           ‧ Click to go to test APIs
         </p>
@@ -136,10 +136,11 @@ export default function HomePage() {
         {showMap ? (
           <div className="map-container" style={{ marginLeft: "-17%", marginTop: "4%" }}>
             <Provider store={store}>
-              <Map
-                locations={locations}
-                mapName={mapName}
-                setShowMap={setShowMap}
+              <Map 
+              formActionDataGeneratePlaces={formActionDataGeneratePlaces}
+              locations={locations}
+              mapName={mapName}
+              setShowMap={setShowMap}
               />
             </Provider>
           </div>
@@ -153,7 +154,7 @@ export default function HomePage() {
         ) : (
           <div className="form-container">
             <form onSubmit={handleSubmit}>
-            <h1>Search Recommendation Places</h1>
+              <h1>Search Recommendation Places</h1>
               <div className="input-container">
                 <label htmlFor="area">Where do you want to go?</label>
                 <input
