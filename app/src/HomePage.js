@@ -57,6 +57,14 @@ export default function HomePage() {
           <img src={logo} alt="Logo" />
         </div>
         <p
+        onClick={() => {
+          navigateTo("/testapis");
+        }}
+        style={{ marginTop: "200px", marginLeft: "-70px" }}
+        >
+          ‧ Click to go to test APIs
+        </p>
+        <p
           onClick={() => {
             navigateTo("/signup");
           }}
