@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import store from "./redux/actions/store.js";
 import "./index.css";
 import logo from "./assets/logo.png";
+import Cookies from 'js-cookie';
 
 export default function HomePage() {
   const navigateTo = useNavigate();
@@ -22,6 +23,9 @@ export default function HomePage() {
   ]); // sample list of saved maps
 
   const [showSavedPlaces, setShowSavedPlaces] = useState(false);
+
+  const isLoggedIn = Cookies.get('isLoggedIn');
+  const username = Cookies.get('username');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,6 +68,13 @@ export default function HomePage() {
         >
           ‧ Click to go to test APIs
         </p>
+        <div>
+          {isLoggedIn && isLoggedIn === true ? (
+            <p>Welcome back, {username}</p>
+          ) : (
+            <p>Please log in to continue.</p>
+          )}
+        </div>
         <p
           onClick={() => {
             navigateTo("/signup");

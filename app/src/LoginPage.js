@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import md5 from "md5";
 import "./index.css";
 import logo from "./assets/logo.png";
+import Cookies from 'js-cookie';
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({ username: '', password: '' });
-  const [errorMessage, setErrorMessage] = useState("");
   const navigateTo = useNavigate();
 
   function handleChange(event) {
@@ -19,28 +19,23 @@ export default function LoginPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: formData.username,
-          password: md5(formData.password)
-        }),
-      });
-      if (response.ok) {
-        // Set cookie to indicate that the user has logged in
-        document.cookie = "loggedIn=true; path=/";
-        navigateTo("/");
-      } else {
-        const data = await response.json();
-        setErrorMessage(data.message);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: formData.username,
+        password: md5(formData.password)
+      })
+    });
+    const data = await response.json();
+    console.log(data);
+    // Set cookie
+    Cookies.set('isLoggedIn', true)
+    Cookies.set('username', data.username)
+    navigateTo("/");
   };
-
 
   return (
     <div className="home-container">
@@ -105,7 +100,6 @@ export default function LoginPage() {
             Login
           </button>
           <p>New to our site? <a href="/signup">Sign up</a></p>
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
         </form>
       </div>
     </div>

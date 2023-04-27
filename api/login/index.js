@@ -18,7 +18,7 @@ module.exports = async function (context, req) {
     } else{
       if(foundUsername.password == req.body.password){
         // Login
-        context.res.status(200).send({ message: "Login was successfull.", userID: foundUsername._id });
+        context.res.status(200).send({ message: "Login was successfull.", userID: foundUsername._id, username: foundUsername.username });
       } else {
         context.res.status(400).send({ message: "Username and password don't match." });
       }
