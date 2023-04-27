@@ -24,7 +24,7 @@ function Map() {
   );
 
   const [resultList, setResultList] = useState([]);
-  const [map, setMap] = useState(null);
+  const [selectedLocations, setSelectedLocations] = useState([]);
 
   useEffect(() => {
     dispatch(fetchLocations());
@@ -43,29 +43,26 @@ function Map() {
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
+    googleMapsApiKey: "AIzaSyA3dhBwgyhqUfgdxWMu8SET4bMa-yQksSs"
   });
 
   const onLoad = React.useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds();
     map.fitBounds(bounds);
-    setMap(map);
   }, []);
 
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null);
-  }, []);
+  const onUnmount = React.useCallback(function callback(map) { }, []);
 
   const handleSaveClick = (address) => {
-    // Implement your save logic here
-    console.log(`Saved address: ${address}`);
-  };
+    // Add the address to the selectedLocations array
+    setSelectedLocations((prevSelectedLocations) => [...prevSelectedLocations, address]);
+  };  
 
   const handleSaveAllClick = () => {
-    // Implement your save all logic here
-    console.log("Save all clicked");
+    const allAddresses = resultList.map((result) => result.address);
+    setSelectedLocations(allAddresses);
   };
-
+  
   return (
     <div>
       {isLoaded ? (
@@ -105,6 +102,16 @@ function Map() {
         <button className="save-all-button" onClick={handleSaveAllClick}>
           Save All
         </button>
+        {selectedLocations.length > 0 && (
+          <div>
+            <h3>Saved Locations:</h3>
+            <ul>
+              {selectedLocations.map((address, index) => (
+                <li key={index}>{address}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
