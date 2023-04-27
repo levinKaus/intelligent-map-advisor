@@ -94,11 +94,7 @@ export default function LoginPage() {
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className="btn-submit" onClick={() => {
-            navigateTo("/");
-          }}>
-            Login
-          </button>
+          <button type="submit">Login</button>
           <p>New to our site? <a href="/signup">Sign up</a></p>
         </form>
       </div>
