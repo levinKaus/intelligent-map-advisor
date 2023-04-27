@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import md5 from "md5";
 import { useNavigate } from "react-router-dom";
 
 export default function TestAPIs() {
@@ -19,7 +20,10 @@ export default function TestAPIs() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(formDataLogin)
+      body: JSON.stringify({
+        username: formDataLogin.username,
+        password: md5(formDataLogin.password)
+      })
     });
     const data = await response.json();
     console.log(data);
