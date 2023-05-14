@@ -16,13 +16,6 @@ export default function HomePage() {
   const [showMap, setShowMap] = useState(false);
   const [locations, setLocations] = useState([]);
   const [mapName, setMapName] = useState("");
-  const [savedMaps] = useState([
-    { name: "Map 1", area: "Paris" },
-    { name: "Map 2", area: "London" },
-    { name: "Map 3", area: "Rome" },
-  ]); // sample list of saved maps
-
-  const [showSavedPlaces, setShowSavedPlaces] = useState(false);
 
   const isLoggedIn = Cookies.get("isLoggedIn");
   const username = Cookies.get("username");
@@ -68,12 +61,12 @@ export default function HomePage() {
         >
           ‧ Test APIs
           {isLoggedIn && isLoggedIn === true ? (
-          <p>Welcome back, {username}</p>
-        ) : (
-          <p>Please log in to continue.</p>
-        )}
+            <p>Welcome back, {username}</p>
+          ) : (
+            <p>Please log in to continue.</p>
+          )}
         </p>
-        <p 
+        <p
           onClick={() => {
             navigateTo("/signup");
           }}
@@ -136,11 +129,6 @@ export default function HomePage() {
           {showMap && <Map locations={locations} mapName={mapName} />}
         </Provider>
       </div>
-      {showSavedPlaces && (
-        <div className="saved-places-container">
-          {/* <SavedPlaces savedPlaces={savedPlaces} /> */}
-        </div>
-      )}
     </div>
   );
 }
