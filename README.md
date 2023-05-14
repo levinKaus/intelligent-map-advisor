@@ -26,7 +26,7 @@ The Back-end code resides in the api directory. To setup and start the project t
 
 1) Run `npm install` in the api folder
 
-2) Create the `.env` file and put all the Envrinment variables in there:
+2) Create the `.env` file and put all the Environment variables in there:
   - Open AI Key
   - Google Geocode Key
   - Cosmos DB Key
