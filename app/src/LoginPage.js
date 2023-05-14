@@ -47,7 +47,7 @@ export default function LoginPage() {
           onClick={() => {
             navigateTo("/");
           }}
-          style={{ marginTop: "175px", marginLeft: "-60px" }}
+          style={{ marginTop: "80%", marginLeft: "-20%" }}
         >
           ‧ Homepage
         </p>
@@ -55,7 +55,7 @@ export default function LoginPage() {
           onClick={() => {
             navigateTo("/signup");
           }}
-          style={{ marginTop: "10px", marginLeft: "-75px" }}
+          style={{ marginTop: "10px", marginLeft: "-31%" }}
         >
           ‧ Sign Up
         </p>
@@ -68,7 +68,8 @@ export default function LoginPage() {
         </div>
       </div>
       <div className="form-container">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}
+          style={{ marginTop: "8%", marginLeft: "50%" }}>
           <h1>Login</h1>
           <div className="form-group">
             <label htmlFor="username">Username</label>

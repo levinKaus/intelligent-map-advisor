@@ -148,6 +148,11 @@ body {
   max-width: 200px;
 }
 
+.map-container {
+  margin-top: 15%;
+  margin-left: 20%;
+}
+
 .home-container {
   display: flex;
   background-image: url(./assets/background.jpg);

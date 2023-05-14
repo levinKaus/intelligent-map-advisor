@@ -83,7 +83,7 @@ export default function SignupPage() {
           onClick={() => {
             navigateTo("/");
           }}
-          style={{ marginTop: "175px", marginLeft: "-40px" }}
+          style={{ marginTop: "90%", marginLeft: "-10%" }}
         >
           ‧ Homepage
         </p>
@@ -91,7 +91,7 @@ export default function SignupPage() {
           onClick={() => {
             navigateTo("/login");
           }}
-          style={{ marginTop: "10px", marginLeft: "-75px" }}
+          style={{ marginTop: "-5%", marginLeft: "-29%" }}
         >
           ‧ Log In
         </p>
@@ -99,7 +99,7 @@ export default function SignupPage() {
           <p> Travel planner with expert guidance and personalized recommendations for your dream vacation. text-align: left</p>
         </div>
       </div>
-      <div className="form-container">
+      <div className="form-container" style={{marginLeft: "20%"}}>
         <form onSubmit={handleSubmit}>
           <h1>Sign Up</h1>
           <div className="form-input">
