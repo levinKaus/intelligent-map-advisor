@@ -18,7 +18,7 @@ const center = {
 };
 
 function Map({ formLocationDataGeneratePlaces }) {
-  const [formActionDataGeneratePlaces, setFormActionDataGeneratePlaces] = useState("");
+  const [formActionDataGeneratePlaces] = useState("");
   const dispatch = useDispatch();
   const { locations, loading, error } = useSelector(
     (state) => state.locations
